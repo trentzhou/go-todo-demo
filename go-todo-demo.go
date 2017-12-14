@@ -109,7 +109,7 @@ func (server *Server) GetValue(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 	var value string
-	if rows.Next() {
+	if rows != nil && rows.Next() {
 		rows.Scan(&value)
 		log.Printf("Retrieved %v=%v", key, value)
 	} else {
