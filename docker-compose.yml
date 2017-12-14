@@ -1,0 +1,19 @@
+version: '2.1'
+services:
+  mysql:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=gotodo
+  go_todo_demo:
+    image: go-todo-demo
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+      - MYSQL_HOST=mysql
+      - MYSQL_PORT=3306
+      - MYSQL_DATABASE=gotodo
+    ports:
+      - 3000:3000
+    links:
+      - mysql
