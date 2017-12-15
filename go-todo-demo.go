@@ -109,7 +109,7 @@ func (server *Server) GetValue(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 	var value string
-	if rows.Next() {
+	if rows != nil && rows.Next() {
 		rows.Scan(&value)
 		log.Printf("Retrieved %v=%v", key, value)
 	} else {
@@ -124,14 +124,20 @@ func (server *Server) GetValue(w http.ResponseWriter, r *http.Request) {
 func main() {
 
 	server := &Server{}
-	for retry := 0; retry < 10; retry++ {
+	dbOK := false
+	// retry the database connection for 1 minute
+	for retry := 0; retry < 60; retry++ {
 		err := server.InitDB()
 		if err == nil {
+			dbOK = true
 			break
 		} else {
 			log.Printf("Failed to initialize database. Retry %v", retry)
 			time.Sleep(1 * time.Second)
 		}
+	}
+	if !dbOK {
+		log.Fatal("Failed to initialize database")
 	}
 	defer server.db.Close()
 

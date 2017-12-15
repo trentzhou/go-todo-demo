@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ../docker-compose.yml
+    kompose.version: 1.6.0 (e4adfef)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: go-todo-demo
+  name: go-todo-demo
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: go-todo-demo
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_DATABASE
+          value: gotodo
+        - name: MYSQL_HOST
+          value: mysql
+        - name: MYSQL_PASSWORD
+          value: root
+        - name: MYSQL_PORT
+          value: "3306"
+        - name: MYSQL_USER
+          value: root
+        image: trentzhou/go-todo-demo
+        name: go-todo-demo
+        ports:
+        - containerPort: 3000
+        resources: {}
+      restartPolicy: Always
+status: {}
