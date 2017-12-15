@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ../docker-compose.yml
+    kompose.version: 1.6.0 (e4adfef)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mysql
+  name: mysql
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: mysql
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_DATABASE
+          value: gotodo
+        - name: MYSQL_ROOT_PASSWORD
+          value: root
+        image: mysql
+        name: mysql
+        resources: {}
+      restartPolicy: Always
+status: {}

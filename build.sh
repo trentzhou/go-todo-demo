@@ -2,4 +2,4 @@
 
 export CGO_ENABLED=0
 go build go-todo-demo.go
-docker build -t go-todo-demo .
+docker build -t trentzhou/go-todo-demo .

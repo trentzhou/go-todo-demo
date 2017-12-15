@@ -32,17 +32,16 @@ jQuery(function ($) {
 			if (arguments.length > 1) {
 				var s = JSON.stringify(data)
 				$.post("/set_value/todo", s);
-				return localStorage.setItem(namespace, s);
 			} else {
+				var result = [];
 				jQuery.ajax({
 					url: "/get_value/todo",
-					success: function (result) {
-						localStorage.setItem(namespace, result);
+					success: function (data) {
+						result = data;
 					},
 					async: false
 				});
-				var store = localStorage.getItem(namespace);
-				return (store && JSON.parse(store)) || [];
+				return result;
 			}
 		}
 	};

@@ -1,4 +1,4 @@
-version: '2.1'
+version: '2'
 services:
   mysql:
     image: mysql
@@ -6,7 +6,7 @@ services:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=gotodo
   go_todo_demo:
-    image: go-todo-demo
+    image: trentzhou/go-todo-demo
     environment:
       - MYSQL_USER=root
       - MYSQL_PASSWORD=root
